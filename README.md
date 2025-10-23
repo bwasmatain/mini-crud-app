@@ -1,5 +1,5 @@
 # Mini CRUD App
 
-Mini CRUD App. React + Express + MongoDB
+Mini CRUD App (Full Stack). React + Express + MongoDB
 
 Thats all...

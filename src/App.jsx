@@ -1,13 +1,24 @@
 import Result from "./components/Result";
+import useFetch from "./hooks/useFetch";
+import { useState } from "react";
 
 function App() {
-  // const getData = (e) => {
-  //   e.preventDefault();
+  const [emp, setEmp] = useState("");
 
-  //   console.log(data);
-  //   console.log(loading);
-  //   console.log(error);
-  // };
+  const api = "http://localhost:7000/api";
+  const { data, loading, error } = useFetch(api);
+  const getData = (e) => {
+    e.preventDefault();
+
+    console.log("Getting data");
+
+    setEmp(data);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    return { data, loading, error };
+  };
 
   return (
     <>
@@ -16,7 +27,7 @@ function App() {
         <h1>Mini CRUD App</h1>
 
         <div className="border-2 ">
-          <form className="form-control w-50 max-w-xs p-4 ">
+          <form className="form-control w-auto max-w-xs p-4 ">
             <label className="label">
               <span className="label-text">Name</span>
             </label>
@@ -34,14 +45,20 @@ function App() {
               className="input input-bordered w-full max-w-xs"
             />
 
-            <button className="btn bg-yellow-200 text-black mt-7">
-              Submit
-            </button>
+            <div className="flex gap-4 mt-18">
+              <button className="btn bg-yellow-200 text-black">Submit</button>
+
+              <button className="btn btn-info" onClick={getData}>
+                Get Results
+              </button>
+            </div>
           </form>
         </div>
       </div>
 
-      <Result />
+      <div className="ml-40">
+        <Result data={emp} />
+      </div>
     </>
   );
 }
